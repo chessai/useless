@@ -1,3 +1,5 @@
+-- credit: @mattoflambda
+--
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TypeOperators #-}
 
