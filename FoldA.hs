@@ -1,4 +1,3 @@
--- credit: David Feuer <david.feuer@gmail.com>
 module FoldA
   ( Ap(..)
   , foldMapA
