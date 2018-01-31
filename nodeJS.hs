@@ -9,6 +9,17 @@ instance IsString Foo where
 
 instance Num Foo where
   fromInteger _ = Foo
+  {-# INLINE fromInteger #-} 
+  _ + _ = Foo
+  {-# INLINE (+) #-} 
+  _ * _ = Foo
+  {-# INLINE (*) #-} 
+  _ - _ = Foo
+  {-# INLINE (-) #-} 
+  abs _ = Foo
+  {-# INLINE abs #-} 
+  signum _ = 1
+  {-# INLINE signum #-}
 
 instance Eq Foo where
   _ == _ = True
@@ -16,27 +27,13 @@ instance Eq Foo where
 default (Foo)
 
 main :: IO ()
-main = print $ 1 == "x"
+main = print $ 1 == "1"
 
-{- 
-$ ghci nodeJS.hs
+{-
+$ ghci nodeJS.hs 
 GHCi, version 8.2.2: http://www.haskell.org/ghc/  :? for help
 [1 of 1] Compiling Main             ( nodeJS.hs, interpreted )
-
-nodeJS.hs:10:10: warning: [-Wmissing-methods]
-    • No explicit implementation for
-        ‘+’, ‘*’, ‘abs’, ‘signum’, and (either ‘negate’ or ‘-’)
-    • In the instance declaration for ‘Num Foo’
-   |
-10 | instance Num Foo where
-   |          ^^^^^^^
 Ok, one module loaded.
 *Main> main
 True
-*Main> :)
-unknown command ':)'
-use :? for help.
-*Main> :q
-Leaving GHCi.
-
 -}
