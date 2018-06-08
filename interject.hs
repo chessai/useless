@@ -8,4 +8,7 @@ interjectString = "I'd just like to interject for a moment. What you’re referr
 
 -- | Interrupt an IO computation to say something stupid
 interject :: IO a -> IO String
-interject action = timeout 0 action >>= maybe (error "NONFREE SOFTWARE DETECTED") (\_ -> pure interjectString)
+interject action = timeout 0 action >>= maybe (pure interjectString) (\_ -> error "NONFREE SOFTWARE DETECTED")
+
+main :: IO ()
+main = print =<< interject (pure ())
