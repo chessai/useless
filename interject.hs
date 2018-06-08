@@ -1,5 +1,6 @@
 module Interject (interject) where
 
+import Data.Maybe (maybe)
 import System.Timeout (timeout)
 
 interjectString :: String
@@ -7,9 +8,4 @@ interjectString = "I'd just like to interject for a moment. What you’re referr
 
 -- | Interrupt an IO computation to say something stupid
 interject :: IO a -> IO String
-interject action = do
-  yallMindIfI <- timeout 0 action
-  case yallMindIfI of
-    Nothing -> pure interjectString
-    _       -> error "NONFREE SOFTWARE DETECTED."
-
+interject action = timeout 0 action >>= maybe (error "NONFREE SOFTWARE DETECTED") (\_ -> pure interjectString)
