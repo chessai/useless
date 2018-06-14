@@ -69,19 +69,16 @@ getDelta :: Delta a -> Maybe (DeltaUnit a)
 getDelta (Delta d) = Just d
 getDelta _         = Nothing
 
-traverseMaybe :: (a -> Maybe b) -> Map k a -> Map k b
-traverseMaybe f m = runIdentity (DMS.traverseMaybeWithKey (\_ x -> Identity (f x)) m)
-
 -- | Retrieve only the old values out of the diff map.
 toOld :: Map k (Delta a)
       -> Map k a
-toOld = traverseMaybe getOld
+toOld = DMS.mapMaybe getOld
 
 -- | Retrieve only the new values out of the diff map.
 toNew :: Map k (Delta a)
       -> Map k a
-toNew = traverseMaybe getNew
+toNew = DMS.mapMaybe getNew
 
 toDelta :: Map k (Delta a)
         -> Map k (DeltaUnit a)
-toDelta = traverseMaybe getDelta
+toDelta = DMS.mapMaybe getDelta
